@@ -1,0 +1,72 @@
+
+
+.wrapper {
+	width: 90%;
+	margin: 0 auto;
+	padding: 150px 0;
+}
+
+.input-wrap {
+	position: relative;
+	height: 30px;
+	width: 30px;
+}
+
+.crossword,
+.clues {
+	display: inline-block;
+	width: 49%;
+	vertical-align: top;
+}
+
+.number {
+	font-size: 8px;
+	color: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000000;
+}
+
+input {
+	position: relative;
+}
+
+.clues {
+	h2, h3, li {
+		font-size: 16px;
+	}
+	h2:last-of-type {
+		margin-top: 20px;
+	}
+	ol {
+		padding-left: 20px;
+		list-style-type: none;
+	}
+	.clue-number {
+		float: left;
+		margin-right: 5px;
+	}
+}
+
+.board {
+	width: 290px;
+	margin: 0 auto;
+}
+
+.blank,
+.letter,
+.input-wrap {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.letter {
+	border: 1px solid #000;
+}
+
+.blank {
+	background: #000;
+}
