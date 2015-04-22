@@ -1,4 +1,4 @@
-
+$correct: #cef296;
 
 .wrapper {
 	width: 90%;
@@ -23,8 +23,8 @@
 	font-size: 8px;
 	color: #000;
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 1px;
+	left: 2px;
 	z-index: 1000000;
 }
 
@@ -65,6 +65,16 @@ input {
 
 .letter {
 	border: 1px solid #000;
+	font-size: 16px;
+	color: #000;
+	text-align: center;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-weight: 600;
+	&.correct {
+		background: $correct;
+		color: darken($correct, 60%);
+	}
 }
 
 .blank {

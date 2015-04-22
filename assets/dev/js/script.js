@@ -1,39 +1,73 @@
 var crossword = {};
 
+crossword.play = function(){
+	this.init();
+	this.getInfo("across");
+	this.getInfo("down");
+	this.evalEntries();
+};
+
 crossword.init = function(){
 	this.clues = {
+		total: 0,
+		correct: 0,
 		across: {},
 		down: {}
 	};
-	this.getInfo("across");
-	this.getInfo("down");
+	var totalClues = $('.clues').find('li');
+	this.clues.total = totalClues.length;
+	
 };
 
 crossword.getInfo = function(direction){
 	var olType = '.' + direction;
 	var clues = $(olType).find('li');
-	var numAcross = clues.length;
 
-	for (var i=1; i <= numAcross; i++){
-		var clue = (direction==="across" ? "Ac" : "Dn") + i;
-		this.clues[direction][clue] = {
-			answer: "",
+	for (var i=1; i <= clues.length; i++){
+		this.clues[direction][i] = {
+			points: 0,
 			spaces: {},
 		};
-		var el = '.' + clue;
-		if (i === 1){
-			this.clues[direction][clue].answer = $(el).attr("data-"+direction+"-answer");
-		};
-		this.clues[direction][clue].spaces = $(el);
+		this.clues[direction][i].spaces = $('[data-'+direction+'='+i+']');
 	};
 };
 
-crossword.getEntries = function(){
+crossword.evalEntries = function(){
+	var guess, word;
 
+	$('.letter').on('keyup', function(event){
+		guess = $(this).val().toLowerCase();
+		answer = $(this).attr('data-letter');
+	
+		if(event.keyCode >= 65 && event.keyCode <= 90){
+			if (guess === answer) {
+				var numAc = $(this).attr('data-across');
+				var numDn = $(this).attr('data-down');
+				if (numAc) {
+					crossword.onCorrect('across', numAc);
+				}
+				if (numDn) {
+					crossword.onCorrect('down', numDn);
+				}
+			}
+		}
+	});	
 };
 
-$(function(){
-	
-	crossword.init();
+crossword.onCorrect = function(direction, clueID){
+	if (this.clues[direction][clueID]){
+		this.clues[direction][clueID].points++;
+		
+		if (this.clues[direction][clueID].points == this.clues[direction][clueID].spaces.length) {
+			this.clues.correct++;
+			$('[data-'+direction+'='+clueID+']').addClass('correct');
+			if (this.clues.correct === this.clues.total) {
+			}
+		}
+	}	
+};
 
+
+$(function(){
+	crossword.play();
 });

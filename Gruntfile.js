@@ -41,6 +41,10 @@ module.exports = function(grunt) {
 				 files: ['assets/dev/scss/styles.scss'],
 				 tasks: ['sass'],
 			 },
+			 js: {
+			 	files: ['assets/dev/js/script.js'],
+			 	tasks: ['uglify']
+			 }
 		 },
 	});
 
