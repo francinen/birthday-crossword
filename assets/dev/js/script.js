@@ -16,7 +16,6 @@ crossword.init = function(){
 	};
 	var totalClues = $('.clues').find('li');
 	this.clues.total = totalClues.length;
-	
 };
 
 crossword.getInfo = function(direction){
@@ -38,7 +37,6 @@ crossword.evalEntries = function(){
 	$('.letter').on('keyup', function(event){
 		guess = $(this).val().toLowerCase();
 		answer = $(this).attr('data-letter');
-	
 		if(event.keyCode >= 65 && event.keyCode <= 90){
 			if (guess === answer) {
 				var numAc = $(this).attr('data-across');
@@ -52,6 +50,11 @@ crossword.evalEntries = function(){
 			}
 		}
 	});	
+	$('.letter').on('keydown', function(event){
+		if (event.keyCode == 32){
+			return false;
+		}
+	});
 };
 
 crossword.onCorrect = function(direction, clueID){
