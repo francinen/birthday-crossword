@@ -32,13 +32,16 @@ crossword.getInfo = function(direction){
 };
 
 crossword.evalEntries = function(){
-	var guess, word;
+	var guess, answer;
+	var letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 	$('.letter').on('keyup', function(event){
 		guess = $(this).val().toLowerCase();
-		answer = $(this).attr('data-letter');
+		answer = letters[$(this).attr('data-letter')];
+
 		if(event.keyCode >= 65 && event.keyCode <= 90){
 			if (guess === answer) {
+
 				var numAc = $(this).attr('data-across');
 				var numDn = $(this).attr('data-down');
 				if (numAc) {
@@ -58,10 +61,10 @@ crossword.evalEntries = function(){
 };
 
 crossword.onCorrect = function(direction, clueID){
-	if (this.clues[direction][clueID]){
-		this.clues[direction][clueID].points++;
-		
-		if (this.clues[direction][clueID].points == this.clues[direction][clueID].spaces.length) {
+	var clue = this.clues[direction][clueID];
+	if (clue){
+		clue.points++;
+		if (clue.points == clue.spaces.length && this.noEmpties(clue)) {
 			this.clues.correct++;
 			$('[data-'+direction+'='+clueID+']').addClass('correct');
 			if (this.clues.correct === this.clues.total) {
@@ -70,6 +73,17 @@ crossword.onCorrect = function(direction, clueID){
 	}	
 };
 
+crossword.noEmpties = function(clue){
+	var spaces = clue.spaces;
+	var count = 0;
+	for (var key = 0; key < clue.spaces.length; key++) {
+		var val = $(spaces[key]).val();
+		if ( val != "" && val ) {
+			count++;
+		}
+	}
+	return count === clue.spaces.length ? true : false; 
+};
 
 $(function(){
 	crossword.play();
